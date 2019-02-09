@@ -65,3 +65,27 @@ $router->delete('bases/{id}', function ($id) {
 	return response()->json(["status"=>true,"message"=>"Base Nautique supprimée"],200);
 	
 });
+
+// modfication d'une base nautique
+$router->put('bases', function(Request $request) {
+	$validator = Validator::make($request->all(), [
+        'id' => 'required|integer',
+		'name' => 'required|string',
+		'city' => 'required|string',
+		'postal_code' => 'required|integer',
+        ]);
+
+    if ($validator->fails()) {
+		$erreurs = json_encode($validator->errors()->all());
+		return response()->json(["status"=>false, "message"=>"Base Nautique pas modifiée ".$erreurs], 200);
+    }
+	$data = $request->all();
+	$id = $data["id"];
+	
+	$res = DB::select("SELECT COUNT(*) AS nb FROM NauticBase WHERE id=?",[$id]);
+	if ($res[0]->nb == 0) {
+		return response()->json(["status"=>false,"message"=>"Base Nautique inexistante"],200);
+	}
+	$result=DB::table('NauticBase')->where('id',$id)->update($data);
+	return response()->json(["status"=>true,"message"=>"Base Nautique modifiée"]);
+});
