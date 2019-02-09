@@ -25,3 +25,13 @@ $router->get('bases/{id}', function ($id) {
 	$base = DB::select("SELECT * FROM NauticBase WHERE id=?",[$id]);
 	return response()->json(["status"=>true, "base"=>$base[0]]);
 });
+
+// liste des bases nautiques avec seulement le nom et la description
+$router->get('bases', function () {
+	$basesArray = array();
+	$bases = DB::select('SELECT "name", "description" FROM NauticBase');
+	foreach ($bases as $base) {
+		$basesArray[] = get_object_vars($base);
+	}
+	return response()->json($basesArray);
+});
