@@ -54,3 +54,14 @@ $router->post('bases', function(Request $request) {
     $result=DB::table('NauticBase')->insert($data);
     return response()->json(["status"=>true, "base"=>$data]);
 });
+
+// supression d'une base nautique
+$router->delete('bases/{id}', function ($id) {
+	$res = DB::select("SELECT COUNT(*) AS nb FROM NauticBase WHERE id=?",[$id]);
+	if ($res[0]->nb == 0) {
+		return response()->json(["status"=>false,"message"=>"Base Nautique inexistante"],200);
+	}
+	$result = DB::table('NauticBase')->where('id','=',$id)->delete();
+	return response()->json(["status"=>true,"message"=>"Base Nautique supprimée"],200);
+	
+});
