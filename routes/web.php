@@ -35,3 +35,22 @@ $router->get('bases', function () {
 	}
 	return response()->json($basesArray);
 });
+
+// ajout d'une base nautique
+$router->post('bases', function(Request $request) {
+    $validator = Validator::make($request->all(), [
+        'name' => 'required|string',
+		'city' => 'required|string',
+		'postal_code' => 'required|integer',
+    ]);
+    
+    if ($validator->fails()) {
+        $erreurs = json_encode($validator->errors()->all());
+        return response()->json(["status"=>false, "message"=>"La base nautique n'a pas été ajoutée".$erreurs], 200);
+    }
+    $data = $request->all();
+    $id = DB::select("SELECT MAX(id) AS maximum FROM NauticBase");
+    $data["id"] = $id[0]->maximum + 1;
+    $result=DB::table('NauticBase')->insert($data);
+    return response()->json(["status"=>true, "base"=>$data]);
+});
