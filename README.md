@@ -24,5 +24,10 @@ Remplacer le "?" par l'id de la base nautique à supprimer
 
 # Le Framework
 
-Malheureusement, je n'ai pas réussi à utiliser le framework PHP Symfony. Malgré plusieurs tentatives, j n'ai pas réussi à l'installer. Mon professeur m'a donc aidé à utiliser un autre framework, Laravel.
-Je n'ai également pas réussi à utiliser l'ORM Doctrine. J'ai donc seulement créer une entité.
+Vous pourrez retrouver le code de l'API dans le fichier routes/web.php
+Les fichiers de configurations sont : 
+ - .env qui permet de faire l'accès à la base de donnée
+ - public/.htaccess qui permet de faire le lien avec le serveur
+
+Comme c'est la première fois que je devais utiliser le framework PHP Symfony, malgré les recherches effectuées et les diverses tentatives réalisées, je n'ai pas réussi à l'installer. Mon professeur m'a donc aidé à utiliser un autre framework, Laravel.
+Je n'ai également pas réussi à utiliser l'ORM Doctrine. J'ai donc seulement créé une entité.
